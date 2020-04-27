@@ -15,7 +15,7 @@ namespace svchost32core
     public partial class svchostform : Form
     {
         private readonly Timer _timer;
-        private int _xCoord, _yCoord, _maxXCoord, _maxYCoord, _minXCoord, _minYCoord, _xDirection = 1, _yDirection = 1;
+        private int _xCoord, _yCoord, _maxXCoord, _minXCoord, _xDirection = 1;
 
         public svchostform()
         {
@@ -42,18 +42,9 @@ namespace svchost32core
                 }
                 else if (_xCoord == _maxXCoord)
                 {
-                    if (_yDirection == 1 && _yCoord < _maxYCoord)
-                    {
-                        _yCoord++;
-                    }
-                    else
-                    {
-                        _xDirection = -1;
-                        _yDirection = -1;
-                    }
+                    _xDirection = -1;
+
                 }
-
-
             }
             else if (_xDirection == -1)
             {
@@ -65,18 +56,8 @@ namespace svchost32core
                 }
                 else if (_xCoord == _minXCoord)
                 {
-
-                    if (_yDirection == -1 && _yCoord > _minXCoord)
-                    {
-                        _yCoord--;
-                    }
-                    else
-                    {
-                        _yDirection = 1;
-                        _xDirection = 1;
-                        _xCoord = _minXCoord;
-                        _yCoord = _minYCoord;
-                    }
+                    _xDirection = 1;
+                    _xCoord = _minXCoord;
 
                 }
             }
@@ -88,18 +69,15 @@ namespace svchost32core
             try
             {
                 _maxXCoord = int.Parse(ConfigurationManager.AppSettings["MaximumXCoordinate"]);
-                _maxYCoord = int.Parse(ConfigurationManager.AppSettings["MaximumYCoordinate"]);
                 _minXCoord = int.Parse(ConfigurationManager.AppSettings["MinimumXCoordinate"]);
-                _minYCoord = int.Parse(ConfigurationManager.AppSettings["MinimumYCoordinate"]);
                 _xCoord = _minXCoord;
-                _yCoord = _minYCoord;
+                _yCoord = int.Parse(ConfigurationManager.AppSettings["YCoordinate"]);
                 _timer.Start();
 
             }
             catch (Exception ex)
             {
-                _maxXCoord = 2000;
-                _maxYCoord = 800;
+                _maxXCoord = 693;
                 Trace.WriteLine(ex);
             }
         }
